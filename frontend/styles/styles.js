@@ -7,8 +7,9 @@ export const colors = {
   color2: "white",
   color3: "#140e0e",
   color4: "transparent",
-  color5: "#f2f2f2",
+  color5: "#f2f2f2d0",
   color6: "#f7f7f7",
+  color7: "gray",
 };
 
 export const defaultStyle = StyleSheet.create({

@@ -4,7 +4,7 @@ import { Avatar } from "react-native-paper";
 import { colors } from "@/styles/styles";
 import { useNavigation } from "@react-navigation/native";
 
-const Header = ({ back, emptyCart = true }) => {
+const Header = ({ back, emptyCart = false }) => {
   const navigate = useNavigation();
   const emptyCartHandler = () => {
     console.log("empty cart");
