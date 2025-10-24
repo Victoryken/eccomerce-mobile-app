@@ -10,6 +10,9 @@ import { colors, defaultStyle } from "../styles/styles";
 import Header from "../components/Header";
 import { Avatar, Button } from "react-native-paper";
 import SearchModel from "../components/SearchModel";
+import ProductCard from "../components/ProductCard";
+import { navigate } from "expo-router/build/global-state/routing";
+import { useNavigation } from "expo-router";
 
 const categories = [
   { category: "Smart Phone", _id: "cat1" },
@@ -24,12 +27,14 @@ const products = [
     _id: "1",
     name: "iPhone 15 Pro",
     price: 1200,
+    stock: 1,
     images: [{ url: "https://m.media-amazon.com/images/I/81UKVHM77GL.jpg" }],
   },
   {
     _id: "2",
     name: "Samsung Galaxy S24",
     price: 999,
+    stock: 2,
     images: [
       {
         url: "https://webstorage.public.gr/Product-Images/GALAXY%20S24%20ULTRA_MAIN/main_S24_ULTRA_BLACK.jpg",
@@ -40,6 +45,7 @@ const products = [
     _id: "3",
     name: "MacBook Air M3",
     price: 1600,
+    stock: 3,
     images: [
       {
         url: "https://top-cyprus.cy/image/cache/catalog/1MacbookPro14m3pro/Macbook_Pro_14_m3_pro_silver_buy-1000x1000.jpg",
@@ -53,10 +59,14 @@ export default function Home() {
   const [ActiveSearch, setActiveSearch] = useState(false);
   const [SearchQueries, setSearchQueries] = useState("");
 
+  const navigation = useNavigation();
   const categoryButtonHandler = (id) => {
     setCategory(id);
   };
 
+  const addToCartHandler = (id) => {
+    console.log("adding to cart", id);
+  };
   return (
     <>
       {ActiveSearch && (
@@ -92,11 +102,11 @@ export default function Home() {
           <TouchableOpacity onPress={() => setActiveSearch(true)}>
             <Avatar.Icon
               icon={"magnify"}
-              size={50}
               color={colors.color7}
               style={{
                 backgroundColor: colors.color2,
                 elevation: 12,
+                marginRight: 20,
               }}
             />
           </TouchableOpacity>
@@ -138,6 +148,24 @@ export default function Home() {
                   {item.category}
                 </Text>
               </Button>
+            ))}
+          </ScrollView>
+        </View>
+        {/* products */}
+        <View style={{ height: 420 }}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {products.map((item, index) => (
+              <ProductCard
+                stock={item.stock}
+                name={item.name}
+                price={item.price}
+                images={item.images[0]?.url}
+                addToCartHandler={addToCartHandler}
+                id={item._id}
+                key={item._id}
+                i={index}
+                navigation={navigate}
+              />
             ))}
           </ScrollView>
         </View>
